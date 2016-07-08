@@ -8,7 +8,6 @@ contract dAgora {
 
 	// Data structure representing a generic product
 	struct Product {
-		bytes32 dph; // Decentralized Product Hash
 		string title;
 		string description;
 		string category;
@@ -19,13 +18,12 @@ contract dAgora {
 		uint id;
 		address customer;
 		uint totalCost;
-		bytes32 dph;
+		uint productId;
 		OrderStatus status;
 	}
 
 	address public admin;
-	mapping (bytes32 => Product) public productList;
-	mapping (uint => bytes32) public productIndex;
+	mapping (uint => Product) public productList;
 	uint public productCount;
 	mapping (address => mapping (uint => Order) ) public orderList;
 	mapping (address => uint) public orderCount; // Maintains an order counter for each customer so that the orderList mapping can be iterated
@@ -38,14 +36,7 @@ contract dAgora {
 
 	function dAgora() {
 		admin = msg.sender;
-	}
-
-	function getProductCount() returns (uint counter) {
-		return productCount;
-	}
-
-	function getProduct(uint index) returns (string title) {
-		return productList[productIndex[index]].title;
+		productCount = 0;
 	}
 
 	/**
@@ -56,29 +47,35 @@ contract dAgora {
 	 * @param price The price of this product in Wei
 	 * @param stock The beginning level of stock for this product
 	 */
-	function addProduct(string title, string description, string category, uint price, uint stock) returns (bool success){
-		bytes32 dph = sha256(title, category, this, msg.sender, block.timestamp); // Create a new unique product ID
+	function addProduct(string title, string description, string category, uint price, uint stock) returns (bool success) {
 		uint nextIndex = productCount + 1;
-		productList[dph] = Product(dph, title, description, category, price, stock);
-		productIndex[nextIndex] = dph;
 		productCount = nextIndex;
+		productList[nextIndex] = Product(title, description, category, price, stock);
 		return true;
 	}
 
+	function getProductCount() returns (uint counter) {
+		return productCount;
+	}
+
+	function getProduct(uint index) returns (string title) {
+		return productList[index].title;
+	}
+
 	/**
-	 * Purchase a product via it's DPH
-	 * @param dphCode The DPH associated with the product to purchase
+	 * Purchase a product via it's ID
+	 * @param index The product ID associated with the product to purchase
 	 */
-	function buy(bytes32 dphCode) {
-		uint price = productList[dphCode].price;
+	function buy(uint index) {
+		uint price = productList[index].price;
 		if(msg.value < price) throw;
 		if(msg.value > price) {
 			if(!msg.sender.send(msg.value - price)) throw;
 		}
 		uint nextId = orderCount[msg.sender] + 1;
-		orderList[msg.sender][nextId] = Order(nextId, msg.sender, price, dphCode, OrderStatus.New);
+		orderList[msg.sender][nextId] = Order(nextId, msg.sender, price, index, OrderStatus.New);
 		orderCount[msg.sender]++;
-		productList[dphCode].stock--;
+		productList[index].stock--;
 	}
 
 	/**
