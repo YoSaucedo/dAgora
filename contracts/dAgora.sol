@@ -47,19 +47,11 @@ contract dAgora {
 	 * @param price The price of this product in Wei
 	 * @param stock The beginning level of stock for this product
 	 */
-	function addProduct(string title, string description, string category, uint price, uint stock) returns (bool success) {
+	function addProduct(string title, string description, string category, uint price, uint stock) isAdmin returns (bool success) {
 		uint nextIndex = productCount + 1;
 		productCount = nextIndex;
 		productList[nextIndex] = Product(title, description, category, price, stock);
 		return true;
-	}
-
-	function getProductCount() returns (uint counter) {
-		return productCount;
-	}
-
-	function getProduct(uint index) returns (string title) {
-		return productList[index].title;
 	}
 
 	/**

@@ -22,23 +22,12 @@ function refreshBalances() {
 function listProducts() {
   var da = dAgora.deployed();
   da.productCount.call().then(function (result) {
-    console.log(parseInt(result));
+    var counter = parseInt(result);
+    for(i = 1; i <= result; i++) {
+      // Display product list
+    }
   }).catch(function(e) {
     console.error(e);
-  });
-}
-
-function setTest() {
-  var da = dAgora.deployed();
-  var price = web3.toWei(parseFloat(document.getElementById("price").value), "ether");
-  var title = document.getElementById("title");
-  var description = document.getElementById("description");
-  var category = document.getElementById("category");
-  var stock = parseInt(document.getElementById("stock"));
-  da.addProduct(title, description, category, price, stock, {from: web3.eth.coinbase}).then(function (tx_id) {
-    console.log(tx_id);
-  }).catch(function (e) {
-    console.log(e);
   });
 }
 
