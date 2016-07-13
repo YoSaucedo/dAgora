@@ -23,8 +23,14 @@ function listProducts() {
   var da = dAgora.deployed();
   da.productCount.call().then(function (result) {
     var counter = parseInt(result);
+    console.log(counter);
     for(i = 1; i <= result; i++) {
       // Display product list
+      da.productList.call(i).then(function(product) {
+        console.log(product[0]);
+      }).catch(function(e) {
+        console.error(e);
+      });
     }
   }).catch(function(e) {
     console.error(e);
@@ -34,10 +40,10 @@ function listProducts() {
 function addProduct() {
   var da = dAgora.deployed();
   var price = web3.toWei(parseFloat(document.getElementById("price").value), "ether");
-  var title = document.getElementById("title");
-  var description = document.getElementById("description");
-  var category = document.getElementById("category");
-  var stock = parseInt(document.getElementById("stock"));
+  var title = document.getElementById("title").value;
+  var description = document.getElementById("description").value;
+  var category = document.getElementById("category").value;
+  var stock = parseFloat(document.getElementById("stock"));
 
   setStatus("Initiating transaction... (please wait)");
   da.addProduct(title, description, category, price, stock, {from: web3.eth.coinbase}).then(function (tx_id) {
