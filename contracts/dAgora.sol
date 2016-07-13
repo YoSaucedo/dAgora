@@ -8,6 +8,9 @@ contract dAgora {
 
 	// Data structure representing a generic product
 	struct Product {
+		string title;
+		string description;
+		uint category;
 		uint price;
 		uint stock;
 	}
@@ -41,10 +44,10 @@ contract dAgora {
 	 * @param price The price of this product in Wei
 	 * @param stock The beginning level of stock for this product
 	 */
-	function addProduct(uint price, uint stock) isAdmin returns (bool success) {
+	function addProduct(string title, string description, uint category, uint price, uint stock) isAdmin returns (bool success) {
 		uint nextIndex = productCount + 1;
 		productCount = nextIndex;
-		productList[nextIndex] = Product(price, stock);
+		productList[nextIndex] = Product(title, description, category, price, stock);
 		return true;
 	}
 
