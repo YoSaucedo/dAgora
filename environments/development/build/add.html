@@ -8,11 +8,12 @@
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
   <link href="./app.css" rel='stylesheet' type='text/css'>
   <script src="./app.js"></script>
 </head>
-<body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
+<body class="site">
+  <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -49,7 +50,7 @@
     </div><!-- /.container-fluid -->
   </nav>
 
-  <div class="container-fluid">
+  <div class="container site-content">
     <div id="status" class="alert"></div>
     <h1>Add New Product</h1>
 
@@ -76,6 +77,17 @@
       <button type="button" class="btn btn-primary" onclick="addProduct();return false;">Add Product</button>
     </form>
   </div>
+  <footer class="footer-distributed">
+			<div class="footer-right">
+				<a href="https://twitter.com/paulszczesny0"><i class="fa fa-twitter"></i></a>
+				<a href="https://www.linkedin.com/in/paulsz"><i class="fa fa-linkedin"></i></a>
+				<a href="https://github.com/dsystems-io/dAgora"><i class="fa fa-github"></i></a>
+			</div>
+			<div class="footer-left">
+				<p class='contract_address'><b>Contract</b>: <span id="c_address" class="c_address"></span></p>
+        <p class='contract_balance'><b>Balance</b>: <span id="c_balance"></span> ETH <button type="button" class="btn btn-xs btn-danger" onclick="withdraw();">Withdraw</button></p>
+			</div>
+		</footer>
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>

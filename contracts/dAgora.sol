@@ -8,6 +8,7 @@ contract dAgora {
 
 	// Data structure representing a generic product
 	struct Product {
+		bytes32 dph; // Decentralized product hash
 		string title;
 		string description;
 		uint category;
@@ -18,12 +19,13 @@ contract dAgora {
 		uint id;
 		address customer;
 		uint totalCost;
-		uint productId;
+		bytes32 dph;
 		OrderStatus status;
 	}
 
 	address public admin;
-	mapping (uint => Product) public productList;
+	mapping (bytes32 => Product) public productList;
+	mapping (uint => bytes32) public productMap;
 	uint public productCount;
 	mapping (address => mapping (uint => Order) ) public orderList;
 	mapping (address => uint) public orderCount; // Maintains an order counter for each customer so that the orderList mapping can be iterated
@@ -45,9 +47,11 @@ contract dAgora {
 	 * @param stock The beginning level of stock for this product
 	 */
 	function addProduct(string title, string description, uint category, uint price, uint stock) isAdmin returns (bool success) {
+		bytes32 dphCode = sha3(title, category, msg.sender);
 		uint nextIndex = productCount + 1;
 		productCount = nextIndex;
-		productList[nextIndex] = Product(title, description, category, price, stock);
+		productMap[nextIndex] = dphCode;
+		productList[dphCode] = Product(dphCode, title, description, category, price, stock);
 		return true;
 	}
 
@@ -55,7 +59,7 @@ contract dAgora {
 	 * Purchase a product via it's ID
 	 * @param index The product ID associated with the product to purchase
 	 */
-	function buy(uint index) {
+	function buy(bytes32 index) {
 		uint price = productList[index].price;
 		if(msg.value < price) throw;
 		if(msg.value > price) {
@@ -73,7 +77,7 @@ contract dAgora {
 	 * @param amount The amount of funds to withdraw in Wei
 	 */
 	function withdraw(address recipient, uint amount) isAdmin {
-		if(!recipient.send(amount)) throw;
+		if(!admin.send(amount)) throw;
 	}
 
 	/**
