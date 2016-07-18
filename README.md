@@ -15,6 +15,9 @@ Decentralized marketplace built with Ethereum.
 ## Test
 * `truffle test`
 
+## Preview
+![alt text](https://raw.githubusercontent.com/dsystems-io/dagora/master/app/images/preview.png "App Preview")
+
 ## Concepts
 The structure of this contract and dApp relies upon a few concepts that deserve explanation:
 * **Decentralized Product Hash (DPH)**: We've indexed the products in the productList using a SHA3 hash of the title, [GPC Segment](http://www.gs1.org/gpc), and creator's address. This is an early attempt at standardizing product ID's/Indexes for the purpose of making searchability and provable identity possible in the future. Suggestions for improving this standard are welcome.
