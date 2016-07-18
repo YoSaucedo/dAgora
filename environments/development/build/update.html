@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,11 +52,17 @@
 
   <div class="container site-content">
     <div id="status" class="alert"></div>
-    <h1>dAgora <span class="subheading">Decentralized Marketplace</span></h1>
+    <h1 class="text-center">Update Product Stock</h1>
 
-    <div id="products" class="col-md-12">
-
-    </div>
+    <form class="col-md-6 col-md-offset-3">
+      <div class="form-group">
+        <input type="text" class="form-control" id="dphCode" placeholder="DPH Code (0x....)">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" id="stock" placeholder="New Stock Amount">
+      </div>
+      <button type="button" id="updateStockButton" class="btn btn-primary">Update</button>
+    </form>
   </div>
   <footer class="footer-distributed">
 			<div class="footer-right">

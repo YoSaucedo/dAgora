@@ -36,7 +36,7 @@
           <ul class="dropdown-menu">
             <li><a href="/add.html">Add Product</a></li>
             <li><a href="/withdraw.html">Withdraw</a></li>
-            <li><a href="#">Update Stock</a></li>
+            <li><a href="/update.html">Update Stock</a></li>
           </ul>
         </li>
         </ul>
@@ -52,29 +52,33 @@
 
   <div class="container site-content">
     <div id="status" class="alert"></div>
-    <h1>Add New Product</h1>
+    <h1 class="text-center">Add New Product</h1>
 
-    <form>
-      <div class="form-group">
+    <form class="col-md-6 col-md-offset-3">
+      <div class="form-group col-md-12">
         <input type="text" class="form-control" id="title" placeholder="Product Title">
       </div>
-      <div class="form-group">
-        <input type="text" class="form-control" id="description" placeholder="Description">
+      <div class="form-group col-md-12">
+        <select id="gpcSegment" class="form-control">
+          <option>-- Select Category --</option>
+        </select>
       </div>
-      <div class="form-group">
-        <input type="text" class="form-control" id="category" placeholder="Category">
-      </div>
-      <div class="form-group">
+      <div class="form-group col-md-6">
         <label class="sr-only" for="price">Price (in Ether)</label>
         <div class="input-group">
           <div class="input-group-addon">&Xi;</div>
           <input type="text" class="form-control" id="price" placeholder="Price (Ether)">
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group col-md-6">
         <input type="text" class="form-control" id="stock" placeholder="Stock">
       </div>
-      <button type="button" class="btn btn-primary" onclick="addProduct();return false;">Add Product</button>
+      <div class="form-group col-md-12">
+        <textarea class="form-control" id="description" rows="4" placeholder="Description"></textarea>
+      </div>
+      <div class="col-md-12">
+        <button type="button" id="addProductFormButton" class="btn btn-primary">Add Product</button>
+      </div>
     </form>
   </div>
   <footer class="footer-distributed">

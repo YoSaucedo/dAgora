@@ -6,11 +6,12 @@
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
   <link href="./app.css" rel='stylesheet' type='text/css'>
   <script src="./app.js"></script>
 </head>
-<body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
+<body class="site">
+  <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -33,7 +34,7 @@
           <ul class="dropdown-menu">
             <li><a href="/add.html">Add Product</a></li>
             <li><a href="/withdraw.html">Withdraw</a></li>
-            <li><a href="#">Update Stock</a></li>
+            <li><a href="/update.html">Update Stock</a></li>
           </ul>
         </li>
         </ul>
@@ -47,11 +48,11 @@
     </div><!-- /.container-fluid -->
   </nav>
 
-  <div class="container-fluid">
+  <div class="container site-content">
     <div id="status" class="alert"></div>
-    <h1>Withdraw Funds</h1>
+    <h1 class="text-center">Withdraw Funds</h1>
 
-    <form>
+    <form class="col-md-6 col-md-offset-3">
       <div class="form-group">
         <input type="text" class="form-control" id="recipient" placeholder="Recipient (0x....)">
       </div>
@@ -59,12 +60,23 @@
         <label class="sr-only" for="price">Amount (in Ether)</label>
         <div class="input-group">
           <div class="input-group-addon">&Xi;</div>
-          <input type="text" class="form-control" id="price" placeholder="Price (Ether)">
+          <input type="text" class="form-control" id="amount" placeholder="Amount (Ether)">
         </div>
       </div>
-      <button type="submit" class="btn btn-primary" onclick="withdraw();">Withdraw</button>
+      <button type="button" id="withdrawFormButton" class="btn btn-primary">Withdraw</button>
     </form>
   </div>
+  <footer class="footer-distributed">
+			<div class="footer-right">
+				<a href="https://twitter.com/paulszczesny0"><i class="fa fa-twitter"></i></a>
+				<a href="https://www.linkedin.com/in/paulsz"><i class="fa fa-linkedin"></i></a>
+				<a href="https://github.com/dsystems-io/dAgora"><i class="fa fa-github"></i></a>
+			</div>
+			<div class="footer-left">
+				<p class='contract_address'><b>Contract</b>: <span id="c_address" class="c_address"></span></p>
+        <p class='contract_balance'><b>Balance</b>: <span id="c_balance"></span> ETH <button type="button" class="btn btn-xs btn-danger" onclick="withdraw();">Withdraw</button></p>
+			</div>
+		</footer>
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>

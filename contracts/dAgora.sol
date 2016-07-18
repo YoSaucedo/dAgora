@@ -1,7 +1,8 @@
 /**
  * @title dAgora
  * @author Paul Szczesny
- * A decentralized marketplace
+ * A decentralized marketplace.
+ * Product segements based on the GS1 GPC classification system (http://www.gs1.org/gpc)
  */
 contract dAgora {
 	enum OrderStatus { New, Pending, Shipped, Cancelled, Refunded, Complete }
@@ -11,7 +12,7 @@ contract dAgora {
 		bytes32 dph; // Decentralized product hash
 		string title;
 		string description;
-		uint category;
+		uint gpcSegment; //Segement code from GS1 GPC specification
 		uint price;
 		uint stock;
 	}
@@ -46,12 +47,12 @@ contract dAgora {
 	 * @param price The price of this product in Wei
 	 * @param stock The beginning level of stock for this product
 	 */
-	function addProduct(string title, string description, uint category, uint price, uint stock) isAdmin returns (bool success) {
-		bytes32 dphCode = sha3(title, category, msg.sender);
+	function addProduct(string title, string description, uint gpcSegment, uint price, uint stock) isAdmin returns (bool success) {
+		bytes32 dphCode = sha3(title, gpcSegment, msg.sender);
 		uint nextIndex = productCount + 1;
 		productCount = nextIndex;
 		productMap[nextIndex] = dphCode;
-		productList[dphCode] = Product(dphCode, title, description, category, price, stock);
+		productList[dphCode] = Product(dphCode, title, description, gpcSegment, price, stock);
 		return true;
 	}
 
@@ -77,21 +78,26 @@ contract dAgora {
 	 * @param amount The amount of funds to withdraw in Wei
 	 */
 	function withdraw(address recipient, uint amount) isAdmin {
-		if(!admin.send(amount)) throw;
+		if(!recipient.send(amount)) throw;
 	}
 
 	/**
-	 * TODO
+	 * Update the stock of a product by DPH
+	 * @param productDph The product DPH of the product to update
+	 * @param newStock The new stock value
 	 */
-	function updateProductStock(bytes32 dphCode, uint newStock) isAdmin {
-
+	function updateProductStock(bytes32 productDph, uint newStock) isAdmin {
+		productList[productDph].stock = newStock;
 	}
 
 	/**
-	 * TODO
+	 * Updates an order status by customer and order ID
+	 * @param customer The address of the customer belonging to this order
+	 * @param orderIndex The order ID belonging to the customer
+	 * @param newStatus The status to update this order to.
 	 */
-	function updateOrderStatus(bytes32 dphCode, OrderStatus status) isAdmin {
-
+	function updateOrderStatus(address customer, uint orderIndex, OrderStatus newStatus) isAdmin {
+		orderList[customer][orderIndex].status = newStatus;
 	}
 
 	/**
@@ -101,4 +107,8 @@ contract dAgora {
 	function removeProduct() isAdmin {
 
 	}
+
+	function kill() isAdmin {
+    suicide(admin); // Kill contract
+  }
 }
