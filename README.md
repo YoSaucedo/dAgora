@@ -32,8 +32,8 @@ The structure of this contract and dApp relies upon a few concepts that deserve 
 
 ## Unsolved Challenges
 1. Dealing with indexes when products are removed.
-  * In order to iterate over products, We've implemented a index to map a uint ID to a DPH. This will create issues when products are removed and the index is no longer sequential.
-  * **Proposal 1**: Keep an seperate array of open productIndex's that can be used when new products are added. So instead of a new product creating a brand new index, it first checks to see whether there is an open slot available.
+  * In order to iterate over products, We've implemented a index to map a uint => DPH. This will create issues when products are removed and the index is no longer sequential.
+  * **Proposal 1**: Keep a seperate array of open productIndex's that can be used when new products are added. So instead of a new product creating a brand new index, it first checks to see whether there is an open slot available.
 2. Providing searchability to products and orders.
   * We currently don't have an easy way for looking through the productList and attempting to match keywords to the fields in the Prodcut struct. Using the **DPH** allows for some primitive search, assuming the user knows the Title, Category, and Creator address.
   * The same is true for Orders
